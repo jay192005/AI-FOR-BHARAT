@@ -1,0 +1,47 @@
+{
+  "name": "lekha-ai-frontend",
+  "version": "1.0.0",
+  "description": "Frontend interface for lekha.ai - AI-powered rent agreement analyzer built with React",
+  "main": "index.html",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jay192005/agreement-front-end-.git"
+  },
+  "keywords": [
+    "lekha.ai",
+    "rent-agreement",
+    "legal-tech",
+    "ai-analysis",
+    "tenant-rights",
+    "frontend",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Jay Gavali",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jay192005/agreement-front-end-/issues"
+  },
+  "homepage": ".",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "dependencies": {
+    "firebase": "^12.8.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-scripts": "^5.0.1"
+  }
+}

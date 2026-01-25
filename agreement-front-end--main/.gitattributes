@@ -1,0 +1,4 @@
+# This is a React project
+*.jsx linguist-language=JavaScript
+*.js linguist-language=JavaScript
+src/** linguist-vendored=false
