@@ -1,4 +1,4 @@
-# Lekha.ai - AI-Powered Lease Agreement Analyzer
+# Lekha.ai - AI-Powered Term And Public Document Analyzer
 
 🏠 **Smart Lease Analysis for Tenants** - Protect yourself from unfair rental agreements with AI-powered legal analysis.
 
