@@ -1,834 +1,951 @@
-# Lekha.ai - Design Document
+# Lekha.ai - AI-Powered Public Document & Terms Analyzer
+## Hackathon Idea Submission - Design Document
 
-## 1. System Architecture
+---
 
-### 1.1 High-Level Architecture
+## 🎨 Executive Design Overview
+
+**Project**: Lekha.ai - AI for Bharat Public Document Analyzer  
+**Stage**: Hackathon Idea Submission  
+**Purpose**: Technical design and architecture proposal for MVP development
+
+This document outlines the proposed system architecture, technology choices, and implementation strategy for building an AI-powered platform that democratizes legal document understanding for all Indians.
+
+---
+
+## 1. System Architecture Overview
+
+### 1.1 High-Level Architecture (Proposed)
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        User Browser                          │
-│  ┌────────────────────────────────────────────────────┐     │
-│  │           React Frontend Application                │     │
-│  │  - Document Upload UI (All Document Types)         │     │
-│  │  - Analysis Progress Display                        │     │
-│  │  - Results Visualization                            │     │
-│  │  - Firebase Authentication                          │     │
-│  └────────────────────────────────────────────────────┘     │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                         USER LAYER                               │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │   Web App    │  │  Mobile App  │  │   API Users  │          │
+│  │   (React)    │  │   (Future)   │  │   (Future)   │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+└─────────────────────────────────────────────────────────────────┘
                             │
                             │ HTTPS/REST API
                             ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Flask Backend Server                      │
-│  ┌────────────────────────────────────────────────────┐     │
-│  │              API Layer (app.py)                     │     │
-│  │  - /api/analyze endpoint (Universal)                │     │
-│  │  - /api/health endpoint                             │     │
-│  │  - File upload handling (All formats)              │     │
-│  │  - CORS configuration                               │     │
-│  └────────────────────────────────────────────────────┘     │
-│                            │                                 │
-│  ┌────────────────────────────────────────────────────┐     │
-│  │         Analysis Engine (ai.py)                     │     │
-│  │  - Rule-based pre-analysis (Universal)             │     │
-│  │  - Gemini AI integration                            │     │
-│  │  - Document type detection                          │     │
-│  │  - JSON parsing & validation                        │     │
-│  │  - Fallback response generation                     │     │
-│  └────────────────────────────────────────────────────┘     │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                    APPLICATION LAYER                             │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │              Flask Backend Server                         │   │
+│  │  ┌────────────────┐  ┌────────────────┐                 │   │
+│  │  │  API Gateway   │  │  Auth Service  │                 │   │
+│  │  └────────────────┘  └────────────────┘                 │   │
+│  │  ┌────────────────┐  ┌────────────────┐                 │   │
+│  │  │ File Processor │  │  Analysis API  │                 │   │
+│  │  └────────────────┘  └────────────────┘                 │   │
+│  └──────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
                             │
-                            │ API Call
+                            │ API Calls
                             ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Google Gemini 2.5 Flash API                     │
-│  - Natural language processing                               │
-│  - Universal document analysis                               │
-│  - Risk assessment for any document type                     │
-│  - Structured JSON response                                  │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                      AI/ML LAYER                                 │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │           Google Gemini 2.5 Flash API                     │   │
+│  │  - Document Understanding                                 │   │
+│  │  - Risk Assessment                                        │   │
+│  │  - Legal Analysis                                         │   │
+│  │  - Plain Language Generation                              │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │           Rule-Based Analysis Engine                      │   │
+│  │  - Keyword Detection                                      │   │
+│  │  - Pattern Matching                                       │   │
+│  │  - Quick Risk Scoring                                     │   │
+│  └──────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
                             │
-                            │ (Optional)
+                            │ (Optional - Future)
                             ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    MySQL Database                            │
-│  - User analysis history (all document types)                │
-│  - Document metadata                                         │
-│  - Usage statistics                                          │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                      DATA LAYER                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │              MySQL/PostgreSQL Database                    │   │
+│  │  - User Accounts                                          │   │
+│  │  - Analysis History                                       │   │
+│  │  - Usage Analytics                                        │   │
+│  └──────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-### 1.2 Component Diagram
+### 1.2 Technology Stack (Proposed)
 
-```
-Frontend Components:
-├── App.jsx (Main application)
-├── Header.jsx (Navigation)
-├── Hero.jsx (Landing page)
-├── Features.jsx (Feature showcase)
-├── HowItWorks.jsx (Process explanation)
-├── Resources.jsx (Additional resources)
-├── Footer.jsx (Footer section)
-├── AuthModal.jsx (Login/Register)
-├── UserProfile.jsx (User dashboard)
-└── DocumentAnalyzer.jsx (Core analysis UI)
-    ├── File Upload Section
-    ├── Text Input Section
-    ├── State Selection
-    ├── Analysis Options
-    ├── Progress Display
-    └── Results Display
-
-Backend Modules:
-├── app.py (Flask application)
-├── ai.py (Analysis engine)
-│   ├── analyze_text_with_rules()
-│   ├── analyze_with_gemini()
-│   ├── clean_json_response()
-│   ├── repair_multiline_json()
-│   ├── ensure_complete_response()
-│   └── create_detailed_fallback_response()
-└── setup_database.py (Database initialization)
-```
+| Layer | Technology | Justification |
+|-------|-----------|---------------|
+| **Frontend** | React 18+ | Modern, component-based, large ecosystem |
+| **Backend** | Python Flask | Lightweight, easy to deploy, AI-friendly |
+| **AI Engine** | Google Gemini 2.5 Flash | Latest model, fast, cost-effective |
+| **Authentication** | Firebase Auth | Quick setup, secure, scalable |
+| **Database** | MySQL (optional) | Reliable, well-documented, free tier |
+| **Hosting** | Vercel (Frontend) + Heroku (Backend) | Free tiers, easy deployment |
+| **File Storage** | In-memory (MVP) | No storage costs, privacy-first |
 
 ---
 
-## 2. Data Flow Design
+## 2. Core Components Design
 
-### 2.1 Document Analysis Flow
+### 2.1 Document Upload & Processing Module
+
+**Purpose**: Handle file uploads and extract text for analysis
+
+**Components**:
+```
+DocumentUploadModule
+├── FileValidator
+│   ├── Check file type (PDF, DOC, TXT, images)
+│   ├── Validate file size (<10MB)
+│   └── Sanitize file name
+├── TextExtractor
+│   ├── PDF text extraction (PyPDF2/pdfplumber)
+│   ├── DOC/DOCX extraction (python-docx)
+│   ├── Image OCR (Tesseract/Google Vision API)
+│   └── Plain text handling
+└── PreProcessor
+    ├── Clean extracted text
+    ├── Remove formatting artifacts
+    └── Normalize whitespace
+```
+
+**Key Features**:
+- Drag-and-drop interface
+- Multiple file format support
+- Real-time validation feedback
+- Progress indicators
+- Error handling with user-friendly messages
+
+**Technical Approach**:
+```python
+# Pseudocode for file processing
+def process_uploaded_file(file):
+    # Validate
+    if not validate_file(file):
+        return error_response("Invalid file type or size")
+    
+    # Extract text
+    text = extract_text(file)
+    
+    # Clean and normalize
+    cleaned_text = preprocess_text(text)
+    
+    return cleaned_text
+```
+
+### 2.2 AI Analysis Engine
+
+**Purpose**: Analyze documents using two-stage approach
+
+**Stage 1: Rule-Based Analysis** (Instant - <1 second)
+```
+RuleBasedEngine
+├── KeywordDictionary
+│   ├── High-risk terms (95-98 severity)
+│   ├── Medium-risk terms (60-75 severity)
+│   └── Low-risk terms (15-30 severity)
+├── PatternMatcher
+│   ├── Regex patterns for common clauses
+│   ├── Phrase detection
+│   └── Context analysis
+└── QuickScorer
+    ├── Calculate preliminary risk score
+    ├── Identify obvious red flags
+    └── Generate initial insights
+```
+
+**Stage 2: AI Semantic Analysis** (3-10 seconds)
+```
+AIAnalysisEngine
+├── PromptGenerator
+│   ├── Create context-aware prompts
+│   ├── Include document type hints
+│   └── Add Indian legal context
+├── GeminiIntegration
+│   ├── API call with optimized config
+│   ├── JSON mode for structured output
+│   └── Timeout and retry handling
+├── ResponseParser
+│   ├── Parse JSON response
+│   ├── Validate required fields
+│   └── Handle malformed responses
+└── FallbackMechanism
+    ├── Use rule-based results if AI fails
+    ├── Generate default comprehensive response
+    └── Log errors for improvement
+```
+
+**AI Prompt Strategy**:
+```
+System Role: "You are Kiro, a Legal Document Auditor specializing in Indian law"
+
+Context: "Analyze this [document_type] for an Indian user"
+
+Instructions:
+- Identify unfair terms
+- Check legal compliance
+- Explain in simple language
+- Provide actionable recommendations
+
+Output Format: Structured JSON with:
+- overallScore (0-100)
+- riskCategory (CRITICAL/DANGEROUS/RISKY/CAUTION/STABLE)
+- summary (15-20 lines in simple language)
+- redFlags (array of issues with titles and descriptions)
+- fairClauses (array of positive aspects)
+- recommendations (array of actionable advice)
+```
+
+### 2.3 Risk Assessment Module
+
+**Purpose**: Calculate and categorize document risk
+
+**Risk Scoring Algorithm**:
+```
+Base Score = 100
+
+For each high-risk term found:
+    Score -= 15 points
+
+For each medium-risk term found:
+    Score -= 8 points
+
+For each positive term found:
+    Score += 10 points
+
+AI Adjustment:
+    Score = (Score * 0.6) + (AI_Score * 0.4)
+
+Final Score = max(0, min(100, Score))
+```
+
+**Risk Categories**:
+| Score Range | Category | Color | User Action |
+|-------------|----------|-------|-------------|
+| 0-20 | CRITICAL | Dark Red | Do not sign, seek legal help |
+| 21-45 | DANGEROUS | Red | Major concerns, negotiate heavily |
+| 46-70 | RISKY | Orange | Review carefully, negotiate |
+| 71-85 | CAUTION | Yellow | Minor issues, clarify terms |
+| 86-100 | STABLE | Green | Generally fair, proceed with confidence |
+
+### 2.4 Results Presentation Module
+
+**Purpose**: Display analysis in user-friendly format
+
+**Components**:
+```
+ResultsDisplay
+├── RiskScoreCard
+│   ├── Numerical score (75/100)
+│   ├── Color-coded indicator
+│   ├── Risk category label
+│   └── Visual progress bar
+├── SummarySection
+│   ├── Plain language overview (15-20 lines)
+│   ├── Key findings highlight
+│   └── Overall recommendation
+├── RedFlagsSection
+│   ├── List of concerning clauses
+│   ├── Severity indicators
+│   ├── Explanation for each
+│   └── Recommended actions
+├── FairClausesSection
+│   ├── Positive aspects
+│   ├── Balanced terms
+│   └── Legal protections present
+└── RecommendationsSection
+    ├── Actionable advice (8+ items)
+    ├── Negotiation strategies
+    ├── Legal compliance checks
+    └── Next steps
+```
+
+**Visual Design Principles**:
+- Color-coding for quick understanding
+- Icons for visual clarity
+- Expandable sections for details
+- Mobile-responsive layout
+- Print-friendly format (future)
+
+---
+
+## 3. Data Flow Design
+
+### 3.1 Complete Analysis Flow
 
 ```
-1. User uploads document or pastes text
+1. User uploads document
    ↓
 2. Frontend validates file (type, size)
    ↓
-3. FormData created with file/text + metadata
+3. File sent to backend via POST /api/analyze
    ↓
-4. POST request to /api/analyze
+4. Backend extracts text from document
    ↓
-5. Backend receives and extracts text
+5. Rule-based analysis (Stage 1) - Instant
+   ├── Keyword scanning
+   ├── Pattern matching
+   └── Preliminary score
    ↓
-6. Rule-based pre-analysis (keyword scan)
+6. AI analysis (Stage 2) - 3-10 seconds
+   ├── Generate context-aware prompt
+   ├── Call Gemini API
+   ├── Parse JSON response
+   └── Validate and enrich data
    ↓
-7. Gemini AI analysis request
+7. Combine results from both stages
    ↓
-8. AI processes document and returns JSON
+8. Generate final analysis report
    ↓
-9. Backend parses and validates JSON
+9. Return JSON response to frontend
    ↓
-10. Fallback response if parsing fails
+10. Frontend displays formatted results
    ↓
-11. Response sent to frontend
-   ↓
-12. Frontend displays formatted results
-   ↓
-13. (Optional) Save to database
+11. (Optional) Save to database if user logged in
 ```
 
-### 2.2 Authentication Flow
+### 3.2 Error Handling Flow
 
 ```
-1. User clicks "Login" or "Try Demo"
+Error Occurs
    ↓
-2. AuthModal opens
-   ↓
-3a. Demo Mode:
-    - Instant access without credentials
-    - Mock user object created
-    ↓
-3b. Email/Password Login:
-    - Firebase authentication
-    - User credentials validated
-    - Session token generated
-    ↓
-4. User state updated in React
-   ↓
-5. DocumentAnalyzer becomes accessible
-   ↓
-6. User email attached to analysis requests
-```
-
----
-
-## 3. Database Design
-
-### 3.1 Entity-Relationship Diagram
-
-```
-┌─────────────────────┐
-│       Users         │
-├─────────────────────┤
-│ id (PK)             │
-│ email               │
-│ created_at          │
-│ last_login          │
-└─────────────────────┘
-          │
-          │ 1:N
-          ▼
-┌─────────────────────┐
-│  Analysis_History   │
-├─────────────────────┤
-│ id (PK)             │
-│ user_id (FK)        │
-│ document_name       │
-│ analysis_date       │
-│ risk_score          │
-│ risk_category       │
-│ red_flags_count     │
-│ fair_clauses_count  │
-│ state               │
-│ full_result (JSON)  │
-└─────────────────────┘
-```
-
-### 3.2 Database Schema
-
-#### Users Table
-```sql
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_email (email)
-);
-```
-
-#### Analysis_History Table
-```sql
-CREATE TABLE analysis_history (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    document_name VARCHAR(255),
-    analysis_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    risk_score INT,
-    risk_category VARCHAR(50),
-    red_flags_count INT,
-    fair_clauses_count INT,
-    state VARCHAR(100),
-    full_result JSON,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    INDEX idx_user_id (user_id),
-    INDEX idx_analysis_date (analysis_date)
-);
+Identify Error Type
+   ├── File Upload Error
+   │   └── Show user-friendly message
+   ├── Text Extraction Error
+   │   └── Suggest alternative format
+   ├── AI API Error
+   │   ├── Retry once
+   │   └── Fall back to rule-based only
+   ├── Timeout Error
+   │   └── Suggest shorter document
+   └── Unknown Error
+       └── Log for debugging, show generic message
 ```
 
 ---
 
 ## 4. API Design
 
-### 4.1 REST API Endpoints
+### 4.1 Core Endpoints (MVP)
 
 #### POST /api/analyze
-
-**Purpose**: Analyze a lease agreement document
+**Purpose**: Analyze uploaded document
 
 **Request**:
 ```http
-POST /api/analyze HTTP/1.1
+POST /api/analyze
 Content-Type: multipart/form-data
 
 file: [binary file data]
-text: [optional text content]
-state: [optional Indian state]
-email: [optional user email]
+OR
+text: [plain text content]
+
+Optional:
+state: [Indian state for context]
+email: [user email if logged in]
 ```
 
 **Response** (Success - 200):
 ```json
 {
-  "overallScore": 75,
-  "ratingScore": 75,
-  "colorLabel": "YELLOW",
-  "ratingText": "CAUTION",
-  "summary": "Comprehensive 15-20 line summary...",
-  "shortSummary": "Brief one-sentence summary",
-  "aiSummary": "Detailed 15-20 line analysis...",
-  "redFlags": [
-    {
-      "title": "Unfair Termination Clause",
-      "issue": "Landlord can terminate lease with only 7 days notice..."
-    }
-  ],
-  "fairClauses": [
-    {
-      "title": "Refundable Security Deposit",
-      "recommendation": "Security deposit is clearly stated as refundable"
-    }
-  ],
-  "recommendations": [
-    "Negotiate termination notice period to minimum 30 days",
-    "Request reduction of security deposit to legal maximum"
-  ],
-  "redFlagsCount": 5,
-  "fairClausesCount": 4
+  "success": true,
+  "analysis": {
+    "overallScore": 75,
+    "riskCategory": "CAUTION",
+    "colorLabel": "YELLOW",
+    "summary": "This document shows moderate risk...",
+    "redFlags": [
+      {
+        "title": "Automatic Renewal Clause",
+        "issue": "Service auto-renews without clear notification",
+        "severity": "medium"
+      }
+    ],
+    "fairClauses": [
+      {
+        "title": "Clear Payment Terms",
+        "description": "Payment amount and schedule clearly specified"
+      }
+    ],
+    "recommendations": [
+      "Review cancellation policy carefully",
+      "Set calendar reminder before renewal date"
+    ],
+    "processingTime": 4.2,
+    "documentType": "terms_and_conditions"
+  }
 }
 ```
 
 **Response** (Error - 400/500):
 ```json
 {
-  "error": "Error message describing the issue"
+  "success": false,
+  "error": {
+    "code": "INVALID_FILE_TYPE",
+    "message": "Please upload a PDF, DOC, or image file",
+    "details": "Supported formats: PDF, DOC, DOCX, TXT, JPG, PNG"
+  }
 }
 ```
 
 #### GET /api/health
+**Purpose**: Check server status
 
-**Purpose**: Check server health status
-
-**Response** (200):
+**Response**:
 ```json
 {
   "status": "ok",
-  "timestamp": "2026-02-11T10:30:00Z"
+  "timestamp": "2026-02-11T10:30:00Z",
+  "version": "1.0.0"
 }
+```
+
+### 4.2 Future Endpoints (Post-MVP)
+
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/history` - Get user's analysis history
+- `GET /api/analysis/:id` - Get specific analysis
+- `POST /api/compare` - Compare two documents
+- `GET /api/export/:id` - Export analysis as PDF
+
+---
+
+## 5. Frontend Design
+
+### 5.1 Component Architecture
+
+```
+App (Root)
+├── Header
+│   ├── Logo
+│   ├── Navigation
+│   └── AuthButton
+├── Hero
+│   ├── Headline
+│   ├── Subheadline
+│   └── CTAButton
+├── DocumentAnalyzer (Main Component)
+│   ├── UploadSection
+│   │   ├── DragDropZone
+│   │   ├── FileInput
+│   │   └── TextInput
+│   ├── OptionsSection
+│   │   ├── StateSelector
+│   │   └── AnalysisOptions
+│   ├── ProgressSection
+│   │   ├── ProgressBar
+│   │   └── StatusMessages
+│   └── ResultsSection
+│       ├── RiskScoreCard
+│       ├── SummaryCard
+│       ├── RedFlagsCard
+│       ├── FairClausesCard
+│       └── RecommendationsCard
+├── Features
+│   └── FeatureCards (3-4 key features)
+├── HowItWorks
+│   └── StepCards (3-step process)
+└── Footer
+    ├── Links
+    ├── Social
+    └── Copyright
+```
+
+### 5.2 User Interface Design
+
+**Design Principles**:
+- **Simplicity**: Clean, uncluttered interface
+- **Clarity**: Clear labels and instructions
+- **Feedback**: Visual feedback for all actions
+- **Accessibility**: WCAG 2.1 AA compliance
+- **Responsiveness**: Mobile-first design
+
+**Color Palette**:
+- Primary: #007bff (Blue - Trust, Technology)
+- Success: #28a745 (Green - Safe, Positive)
+- Warning: #ffc107 (Yellow - Caution)
+- Danger: #dc3545 (Red - Risk, Alert)
+- Dark: #343a40 (Text, Headers)
+- Light: #f8f9fa (Background)
+
+**Typography**:
+- Headings: Inter/Roboto (Bold, Clear)
+- Body: Open Sans/Lato (Readable, Professional)
+- Code: Fira Code/Monaco (Monospace for technical)
+
+### 5.3 User Experience Flow
+
+```
+Landing Page
+   ↓
+[Try Demo] or [Sign Up]
+   ↓
+Document Upload Screen
+   ├── Drag & Drop
+   ├── Browse Files
+   └── Paste Text
+   ↓
+Optional: Select State
+   ↓
+Click "Analyze"
+   ↓
+Progress Screen (3-10 seconds)
+   ├── Animated progress bar
+   ├── Status messages
+   └── Fun facts about legal rights
+   ↓
+Results Screen
+   ├── Risk Score (prominent)
+   ├── Summary (easy to read)
+   ├── Red Flags (expandable)
+   ├── Fair Clauses (expandable)
+   └── Recommendations (actionable)
+   ↓
+Actions
+   ├── Analyze Another Document
+   ├── Download Report (future)
+   ├── Share Results (future)
+   └── Get Legal Help (future)
 ```
 
 ---
 
-## 5. AI Analysis Design
+## 6. Security & Privacy Design
 
-### 5.1 Two-Stage Analysis Process
+### 6.1 Data Protection Strategy
 
-#### Stage 1: Rule-Based Pre-Analysis
+**Privacy-First Approach**:
+- Documents processed in memory only
+- No permanent storage without explicit consent
+- Automatic deletion after analysis
+- No tracking or profiling in free tier
 
-**Purpose**: Quick keyword-based risk detection
-
-**Implementation**:
-```python
-DANGER_KEYWORDS = {
-    "waive your rights": 95,
-    "landlord is not responsible for any injury": 90,
-    "access the property without notice": 85,
-    "tenant is responsible for all repairs": 80,
-    "confess judgment": 98,
-    "security deposit is non-refundable": 88,
-    "automatic renewal": 70,
-    "rent increases may occur": 65,
-    "at the landlord's sole discretion": 60,
-    "as-is condition": 55,
-    "late fees of more than 5%": 68,
-    "no pets": 20,
-    "no alterations or improvements": 25,
-    "subletting requires prior consent": 15
-}
+**Data Flow**:
+```
+User uploads document
+   ↓
+Stored in server memory (RAM)
+   ↓
+Text extracted and analyzed
+   ↓
+Results generated
+   ↓
+Document deleted from memory
+   ↓
+Only results returned to user
 ```
 
-**Output**:
-- List of found dangerous phrases
-- Preliminary risk score
-- Issue count
-
-#### Stage 2: Gemini AI Analysis
-
-**Purpose**: Deep semantic analysis with legal context
-
-**Model Configuration**:
-```python
-generation_config = {
-    "temperature": 0.7,      # Balanced creativity/consistency
-    "top_p": 0.95,           # Nucleus sampling
-    "top_k": 40,             # Top-k sampling
-    "max_output_tokens": 2048 # Sufficient for detailed analysis
-}
-
-model = genai.GenerativeModel(
-    'gemini-2.5-flash',
-    generation_config=generation_config
-)
-```
-
-**Prompt Engineering**:
-```
-You are Kiro, a Legal Risk Auditor. Analyze this lease agreement thoroughly.
-
-RATING: 0-20=CRITICAL, 21-45=DANGEROUS, 46-70=RISKY, 71-85=CAUTION, 86-100=STABLE
-
-Location: {state}, India.
-
-Return ONLY this JSON format (no markdown):
-{
-  "overallScore": 75,
-  "colorLabel": "YELLOW",
-  "summary": "Comprehensive 15-20 line summary...",
-  "redFlags": [...],
-  "fairClauses": [...],
-  "recommendations": [...]
-}
-
-Document: {text}
-```
-
-### 5.2 Risk Scoring Algorithm
-
-**Formula**:
-```
-Base Score = 100
-
-For each high-risk term found:
-  Score -= 15 points
-
-For each medium-risk term found:
-  Score -= 8 points
-
-For each positive term found:
-  Score += 10 points
-
-Final Score = max(10, min(90, Score))
-```
-
-**Risk Categories**:
-| Score Range | Category | Color | Label |
-|-------------|----------|-------|-------|
-| 0-20 | Critical | Dark Red | CRITICAL |
-| 21-45 | Dangerous | Red | DANGEROUS |
-| 46-70 | Risky | Orange | RISKY |
-| 71-85 | Caution | Yellow | CAUTION |
-| 86-100 | Stable | Green | STABLE |
-
-### 5.3 JSON Parsing Strategy
-
-**Three-Level Fallback System**:
-
-1. **Direct Parse**: Attempt standard JSON parsing
-2. **Advanced Repair**: Fix multiline strings, trailing commas
-3. **Fallback Response**: Generate comprehensive default response
-
-**Repair Functions**:
-- `clean_json_response()`: Remove markdown, extract JSON
-- `repair_multiline_json()`: Fix broken multiline strings
-- `ensure_complete_response()`: Validate all required fields
-- `create_detailed_fallback_response()`: Generate default analysis
-
----
-
-## 6. Frontend Design
-
-### 6.1 Component Architecture
-
-#### DocumentAnalyzer Component
-
-**State Management**:
-```javascript
-const [dragActive, setDragActive] = useState(false);
-const [uploadedFile, setUploadedFile] = useState(null);
-const [textInput, setTextInput] = useState('');
-const [uploadMethod, setUploadMethod] = useState('file');
-const [isAnalyzing, setIsAnalyzing] = useState(false);
-const [analysisProgress, setAnalysisProgress] = useState(0);
-const [analysisResult, setAnalysisResult] = useState(null);
-const [selectedState, setSelectedState] = useState('');
-```
-
-**Key Functions**:
-- `handleDrag()`: Drag-and-drop event handling
-- `handleDrop()`: File drop processing
-- `handleFile()`: File validation
-- `startAnalysis()`: Initiate analysis request
-- `removeFile()`: Clear uploaded file
-
-**UI Sections**:
-1. State Selection Dropdown
-2. Upload Method Toggle (File/Text)
-3. File Upload Area (Drag & Drop)
-4. Text Input Area
-5. Analysis Options Checkboxes
-6. Progress Display
-7. Results Display
-
-### 6.2 Responsive Design
-
-**Breakpoints**:
-- Mobile: < 768px
-- Tablet: 768px - 1024px
-- Desktop: > 1024px
-
-**Layout Strategy**:
-- Flexbox for component arrangement
-- CSS Grid for results display
-- Modal overlay for analyzer
-- Responsive typography scaling
-
-### 6.3 Color Scheme
-
-**Primary Colors**:
-- Primary Blue: `#007bff`
-- Success Green: `#28a745`
-- Warning Yellow: `#ffc107`
-- Danger Red: `#dc3545`
-- Dark Red: `#8b0000`
-
-**Neutral Colors**:
-- Background: `#f8f9fa`
-- White: `#ffffff`
-- Light Gray: `#e0e0e0`
-- Dark Gray: `#333333`
-- Text: `#212529`
-
-**Risk Colors**:
-- Critical: `#8b0000` (Dark Red)
-- Dangerous: `#dc3545` (Red)
-- Risky: `#ff6b6b` (Orange-Red)
-- Caution: `#ffc107` (Yellow)
-- Stable: `#28a745` (Green)
-
----
-
-## 7. Security Design
-
-### 7.1 Authentication Security
-
-**Firebase Authentication**:
-- Email/password authentication
-- Session token management
-- Secure token storage
-- Automatic token refresh
-
-**Demo Mode Security**:
-- No persistent data storage
-- Limited functionality access
-- Session-only user state
-- No sensitive operations
-
-### 7.2 API Security
+### 6.2 Security Measures
 
 **Input Validation**:
 - File type whitelist
 - File size limits (10MB)
-- Text length validation
-- State parameter validation
+- Content sanitization
+- Malware scanning (future)
 
-**CORS Configuration**:
-```python
-CORS(app, resources={
-    r"/api/*": {
-        "origins": ["http://localhost:3000", "http://127.0.0.1:5000"],
-        "methods": ["GET", "POST"],
-        "allow_headers": ["Content-Type"]
-    }
-})
-```
+**API Security**:
+- HTTPS only (TLS 1.3)
+- Rate limiting (10 requests/minute for free tier)
+- API key authentication for premium
+- CORS configuration
 
-**Environment Variables**:
-- API keys stored in `.env`
-- Never committed to version control
-- Validated on application startup
-- Stripped of quotes/whitespace
+**Authentication Security**:
+- Firebase Auth (industry standard)
+- Password hashing (bcrypt)
+- Session management
+- JWT tokens
 
-### 7.3 Data Security
+### 6.3 Compliance
 
-**File Handling**:
-- Files processed in memory
-- No permanent storage
-- Automatic cleanup after analysis
-- Secure file type validation
+**Legal Compliance**:
+- Terms of Service (clear disclaimers)
+- Privacy Policy (transparent data practices)
+- GDPR compliance (for EU users)
+- Indian IT Act compliance
 
-**Database Security** (when enabled):
-- Parameterized queries (SQL injection prevention)
-- User data encryption
-- Access control
-- Regular backups
+**Disclaimers**:
+- "For informational purposes only"
+- "Not a substitute for legal advice"
+- "Consult a lawyer for legal matters"
+- "AI analysis may have limitations"
 
 ---
 
-## 8. Error Handling Design
+## 7. Performance Optimization
 
-### 8.1 Error Categories
+### 7.1 Backend Optimization
 
-**Client Errors (400-499)**:
-- Invalid file type
-- File size exceeded
-- Missing required parameters
-- Invalid state parameter
+**Strategies**:
+- Async processing for file uploads
+- Connection pooling for database
+- Caching for common analyses (future)
+- CDN for static assets
+- Gzip compression for responses
 
-**Server Errors (500-599)**:
-- API key issues
-- Gemini API failures
-- Database connection errors
-- JSON parsing failures
+**Target Metrics**:
+- API response time: <5 seconds (95th percentile)
+- File upload: <2 seconds for 5MB file
+- Text extraction: <1 second
+- AI analysis: 3-10 seconds
 
-### 8.2 Error Response Format
+### 7.2 Frontend Optimization
 
-```json
-{
-  "error": "User-friendly error message",
-  "code": "ERROR_CODE",
-  "details": "Technical details for debugging"
-}
-```
+**Strategies**:
+- Code splitting (React.lazy)
+- Image optimization (WebP format)
+- Lazy loading for below-fold content
+- Service worker for caching (PWA)
+- Minification and bundling
 
-### 8.3 Fallback Mechanisms
+**Target Metrics**:
+- First Contentful Paint: <1.5 seconds
+- Time to Interactive: <3 seconds
+- Lighthouse score: >90
 
-**AI Analysis Fallback**:
-1. Primary: Gemini AI analysis
-2. Secondary: Rule-based analysis
-3. Tertiary: Default comprehensive response
+### 7.3 AI Optimization
 
-**Database Fallback**:
-1. Primary: MySQL database
-2. Secondary: In-memory storage
-3. Tertiary: No storage (analysis only)
-
----
-
-## 9. Performance Optimization
-
-### 9.1 Backend Optimization
-
-**Caching Strategy**:
-- API response caching (future)
-- Static file caching
-- Database query optimization
-
-**Request Optimization**:
-- Async processing for long operations
-- Request timeout handling (10s)
-- Connection pooling
-
-**Resource Management**:
-- Memory-efficient file processing
-- Garbage collection optimization
-- Connection cleanup
-
-### 9.2 Frontend Optimization
-
-**Code Splitting**:
-- Lazy loading components
-- Dynamic imports
-- Route-based splitting
-
-**Asset Optimization**:
-- Image compression
-- Minified JavaScript/CSS
-- Gzip compression
-
-**Rendering Optimization**:
-- React.memo for expensive components
-- useCallback for event handlers
-- useMemo for computed values
-- Virtual scrolling for long lists
-
-### 9.3 Network Optimization
-
-**Request Optimization**:
-- FormData for efficient file upload
-- Progress tracking
-- Request cancellation
-- Retry logic
-
-**Response Optimization**:
-- JSON compression
-- Minimal response payload
-- Streaming for large responses
+**Strategies**:
+- Optimized prompts (shorter, clearer)
+- JSON mode for structured output
+- Timeout handling (10 seconds max)
+- Fallback to rule-based if AI fails
+- Batch processing for multiple documents (future)
 
 ---
 
-## 10. Testing Strategy
+## 8. Scalability Design
 
-### 10.1 Unit Testing
+### 8.1 Horizontal Scaling
 
-**Backend Tests**:
-```python
-# test_ai.py
-def test_analyze_text_with_rules():
-    text = "security deposit is non-refundable"
-    result = analyze_text_with_rules(text)
-    assert result['preliminary_score'] == 88
-
-def test_clean_json_response():
-    json_text = '```json\n{"score": 75}\n```'
-    result = clean_json_response(json_text)
-    assert result['score'] == 75
+**Architecture**:
+```
+Load Balancer
+   ↓
+┌─────────┬─────────┬─────────┐
+│ Server 1│ Server 2│ Server 3│
+└─────────┴─────────┴─────────┘
+   ↓
+Database (with replication)
 ```
 
-**Frontend Tests**:
-```javascript
-// DocumentAnalyzer.test.jsx
-test('validates file size', () => {
-  const largeFile = new File(['x'.repeat(11*1024*1024)], 'large.pdf');
-  const result = handleFile(largeFile);
-  expect(result).toBe(false);
-});
+**Scaling Strategy**:
+- Stateless backend (no session storage)
+- Database connection pooling
+- Auto-scaling based on CPU/memory
+- Queue system for peak loads (Celery/RabbitMQ)
 
-test('displays analysis results', () => {
-  const result = { ratingScore: 75, ratingText: 'CAUTION' };
-  render(<DocumentAnalyzer analysisResult={result} />);
-  expect(screen.getByText('CAUTION')).toBeInTheDocument();
-});
-```
+### 8.2 Cost Optimization
 
-### 10.2 Integration Testing
+**Free Tier Strategy**:
+- Vercel (Frontend): Free for personal projects
+- Heroku (Backend): Free dyno (limited hours)
+- Firebase Auth: Free up to 10K users
+- Gemini API: Pay-per-use (optimize prompts)
 
-**API Tests**:
-```python
-def test_analyze_endpoint():
-    with open('test_lease.pdf', 'rb') as f:
-        response = client.post('/api/analyze', data={'file': f})
-    assert response.status_code == 200
-    assert 'overallScore' in response.json
-```
-
-### 10.3 End-to-End Testing
-
-**User Workflows**:
-1. Upload document → Analyze → View results
-2. Paste text → Select state → Analyze → View results
-3. Demo login → Upload → Analyze → Logout
-4. Error handling → Invalid file → Error message
+**Scaling Costs** (Estimated):
+- 1,000 users/month: ~$50/month
+- 10,000 users/month: ~$200/month
+- 100,000 users/month: ~$1,500/month
 
 ---
 
-## 11. Deployment Design
+## 9. Testing Strategy
 
-### 11.1 Development Environment
+### 9.1 Testing Pyramid
 
-**Setup**:
+```
+        /\
+       /  \
+      / E2E \
+     /--------\
+    /Integration\
+   /--------------\
+  /   Unit Tests   \
+ /------------------\
+```
+
+**Unit Tests** (70% coverage target):
+- File validation functions
+- Text extraction functions
+- Risk scoring algorithm
+- JSON parsing functions
+
+**Integration Tests** (20% coverage):
+- API endpoints
+- Database operations
+- AI API integration
+- Authentication flow
+
+**End-to-End Tests** (10% coverage):
+- Complete user workflows
+- Document upload to results
+- Error scenarios
+- Cross-browser testing
+
+### 9.2 Test Cases (Sample)
+
+**Functional Tests**:
+- ✅ Upload valid PDF and get analysis
+- ✅ Upload invalid file and get error
+- ✅ Paste text and get analysis
+- ✅ Analysis completes in <10 seconds
+- ✅ Results display correctly
+- ✅ Demo mode works without login
+
+**Non-Functional Tests**:
+- ⚡ Load test: 100 concurrent users
+- 🔒 Security test: SQL injection, XSS
+- 📱 Mobile responsiveness test
+- ♿ Accessibility test (WCAG 2.1)
+
+---
+
+## 10. Deployment Strategy
+
+### 10.1 Development Environment
+
+**Local Setup**:
 ```bash
 # Backend
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+source venv/bin/activate
 pip install -r requirements.txt
 python app.py
 
 # Frontend
-cd agreement-front-end--main
+cd frontend
 npm install
 npm start
 ```
 
-**Configuration**:
-- `.env` for environment variables
-- `config.py` for application settings
-- `firebase.js` for Firebase config
-
-### 11.2 Production Environment
-
-**Deployment Platforms**:
-- **Backend**: Heroku, Railway, Render
-- **Frontend**: Vercel, Netlify
-- **Database**: Aiven, PlanetScale, AWS RDS
-
 **Environment Variables**:
-```bash
-GEMINI_API_KEY=production_key
-FLASK_ENV=production
-DEBUG=False
-DATABASE_URL=production_db_url
-ALLOWED_ORIGINS=https://lekha.ai
+```
+GEMINI_API_KEY=your_api_key
+FLASK_ENV=development
+DEBUG=True
+DATABASE_URL=optional
+FIREBASE_CONFIG=your_firebase_config
 ```
 
-**Build Process**:
+### 10.2 Production Deployment
+
+**Frontend (Vercel)**:
 ```bash
-# Frontend build
+# Build
 npm run build
 
-# Backend deployment
-gunicorn app:app --bind 0.0.0.0:$PORT
+# Deploy
+vercel --prod
 ```
 
-### 11.3 Monitoring & Logging
+**Backend (Heroku)**:
+```bash
+# Create app
+heroku create lekha-ai-backend
 
-**Logging Strategy**:
-- Application logs (Flask)
-- Error logs (exceptions)
-- Access logs (requests)
-- Performance logs (timing)
+# Set environment variables
+heroku config:set GEMINI_API_KEY=xxx
 
-**Monitoring Tools**:
-- Server health checks
+# Deploy
+git push heroku main
+```
+
+**CI/CD Pipeline** (Future):
+```
+GitHub Push
+   ↓
+Run Tests (GitHub Actions)
+   ↓
+Build (if tests pass)
+   ↓
+Deploy to Staging
+   ↓
+Manual Approval
+   ↓
+Deploy to Production
+```
+
+---
+
+## 11. Monitoring & Analytics
+
+### 11.1 Application Monitoring
+
+**Metrics to Track**:
 - API response times
-- Error rate tracking
-- User analytics
+- Error rates
+- Uptime percentage
+- AI API usage and costs
+- User engagement
+
+**Tools** (Proposed):
+- Sentry (Error tracking)
+- Google Analytics (User behavior)
+- Heroku Metrics (Server performance)
+- Custom dashboard (Usage stats)
+
+### 11.2 User Analytics
+
+**Key Metrics**:
+- Daily/Monthly Active Users (DAU/MAU)
+- Documents analyzed per day
+- Average analysis time
+- User satisfaction (ratings)
+- Feature usage
+- Conversion rate (free to premium)
 
 ---
 
 ## 12. Future Enhancements
 
-### 12.1 Planned Features
+### 12.1 Phase 2 Features
 
-**Phase 2**:
-- PDF report generation
-- Email notifications
-- Analysis history dashboard
-- Document comparison
+**Mobile App**:
+- Native Android/iOS apps
+- Camera document scanning
+- Offline analysis (cached models)
+- Push notifications
 
-**Phase 3**:
-- Multi-language support
-- Mobile applications
-- Advanced analytics
-- Legal consultation integration
+**Advanced AI**:
+- Fine-tuned model for Indian legal documents
+- Multi-document comparison
+- Clause-by-clause annotation
+- Legal precedent matching
 
-**Phase 4**:
-- Machine learning model training
+**Multilingual**:
+- Hindi UI and analysis
+- Regional language support (5 languages)
+- Voice input/output
+- Translation of legal terms
+
+### 12.2 Phase 3 Features
+
+**Enterprise**:
+- Team accounts
+- Bulk document processing
+- API access for integration
 - Custom risk profiles
+- White-label solutions
+
+**Marketplace**:
+- Connect with lawyers
+- Legal consultation booking
+- Document templates
+- Educational resources
+
+**AI Enhancements**:
+- Predictive risk modeling
+- Personalized recommendations
+- Contract negotiation assistant
 - Automated clause suggestions
-- Blockchain verification
-
-### 12.2 Scalability Considerations
-
-**Horizontal Scaling**:
-- Load balancer configuration
-- Multiple backend instances
-- Database replication
-- CDN for static assets
-
-**Vertical Scaling**:
-- Increased server resources
-- Database optimization
-- Caching layers
-- Queue systems for async processing
 
 ---
 
-## Document Control
+## 13. Technical Challenges & Solutions
 
-**Version**: 1.0  
-**Last Updated**: February 11, 2026  
-**Author**: Lekha.ai Development Team  
-**Status**: Approved  
-**Next Review**: March 2026
+### 13.1 Challenge: AI Accuracy
+
+**Problem**: AI may misinterpret legal clauses
+
+**Solutions**:
+- Two-stage analysis (rule-based + AI)
+- Human review option for premium users
+- Continuous model improvement with feedback
+- Clear disclaimers about limitations
+
+### 13.2 Challenge: Processing Speed
+
+**Problem**: Large documents take time to analyze
+
+**Solutions**:
+- Optimize text extraction
+- Efficient AI prompts
+- Parallel processing
+- Progress indicators for user patience
+
+### 13.3 Challenge: Cost Management
+
+**Problem**: AI API costs can scale quickly
+
+**Solutions**:
+- Optimize prompts to reduce tokens
+- Implement caching for similar documents
+- Rate limiting for free tier
+- Batch processing for efficiency
+
+### 13.4 Challenge: Legal Liability
+
+**Problem**: Users may rely solely on AI analysis
+
+**Solutions**:
+- Clear disclaimers everywhere
+- "Informational purposes only" messaging
+- Encourage professional legal consultation
+- Terms of Service with liability limits
 
 ---
 
-## Appendix
+## 14. Success Criteria
 
-### A. Technology Stack Summary
+### 14.1 Technical Success
 
-| Layer | Technology | Version | Purpose |
-|-------|-----------|---------|---------|
-| Frontend | React | 18+ | UI framework |
-| Frontend | Firebase | 9+ | Authentication |
-| Backend | Flask | 2.3+ | Web framework |
-| Backend | Python | 3.8+ | Programming language |
-| AI | Google Gemini | 2.5 Flash | Document analysis |
-| Database | MySQL | 8.0+ | Data storage |
-| Deployment | Vercel/Heroku | - | Hosting |
+- ✅ MVP deployed and accessible online
+- ✅ 95% uptime in first 3 months
+- ✅ <5 second analysis time for 90% of documents
+- ✅ 90%+ user satisfaction with accuracy
+- ✅ Zero critical security vulnerabilities
 
-### B. File Structure
+### 14.2 User Success
 
-```
-lekha.ai/
-├── agreement-front-end--main/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── config/
-│   │   └── ...
-│   ├── package.json
-│   └── build/
-├── backend_package/
-│   ├── ai.py
-│   ├── app.py
-│   ├── requirements.txt
-│   └── ...
-├── databases/
-│   ├── analysis_history.sql
-│   └── data.sql
-├── .env.example
-├── .gitignore
-├── README.md
-├── requirements.md
-├── design.md
-└── ...
-```
+- ✅ 10,000+ users in first 3 months
+- ✅ 50,000+ documents analyzed
+- ✅ 4+ star average rating
+- ✅ 30%+ return user rate
+- ✅ Positive user testimonials
+
+### 14.3 Social Impact Success
+
+- ✅ Help 100,000+ Indians understand documents
+- ✅ Prevent ₹10 crore+ in potential losses
+- ✅ Partnerships with 5+ NGOs
+- ✅ Media coverage and recognition
+- ✅ Measurable improvement in legal literacy
+
+---
+
+## 15. Conclusion
+
+Lekha.ai is designed as a scalable, user-friendly, and impactful solution to democratize legal document understanding in India. The proposed architecture balances simplicity for MVP development with extensibility for future growth.
+
+**Key Design Principles**:
+1. **User-First**: Simple, accessible, no legal expertise required
+2. **Privacy-First**: No data storage, transparent practices
+3. **AI-Powered**: Latest technology for accuracy and speed
+4. **Scalable**: Cloud-native, ready for millions of users
+5. **Impact-Focused**: Free tier, social mission, measurable outcomes
+
+**Next Steps**:
+1. Finalize technology choices
+2. Set up development environment
+3. Build MVP (2 months)
+4. Beta testing with 100 users
+5. Public launch and iteration
+
+---
+
+## Document Information
+
+**Version**: 1.0 (Hackathon Idea Submission)  
+**Date**: February 11, 2026  
+**Team**: Lekha.ai  
+**Hackathon**: AI for Bharat  
+**Status**: Design Proposal Stage  
+
+---
+
+**Note**: This is a design document for hackathon idea submission. The project is in conceptual stage. Technical specifications are proposed based on best practices and may be refined during implementation.
