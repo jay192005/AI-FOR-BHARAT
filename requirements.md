@@ -3,15 +3,26 @@
 
 ---
 
+> **📌 IMPORTANT NOTE**: This is an **IDEA PROPOSAL** for the AI for Bharat Hackathon.  
+> The system described here is **NOT YET BUILT**.  
+> This document presents our **VISION** and **PLANNED FEATURES** for the platform.  
+> We are seeking support to **DEVELOP** this solution, not presenting a completed product.
+
+---
+
 ## 🎯 Executive Summary
 
-**Project Name**: Lekha.ai - AI for Bharat Public Document Analyzer
+**Project Name**: Lekha.ai - AI for Bharat Public Document Analyzer  
+**Status**: **CONCEPT STAGE** - Idea Submission for Hackathon  
+**Goal**: Seeking approval and support to build this solution
 
 **Problem Statement**: Millions of Indians sign legal documents, terms & conditions, and agreements without fully understanding the implications. Complex legal language, hidden clauses, and unfair terms often disadvantage common citizens, leading to financial losses, legal disputes, and exploitation.
 
-**Proposed Solution**: An AI-powered platform that analyzes any public document in seconds, identifies risks, explains complex terms in simple language, and empowers users to make informed decisions.
+**Proposed Solution**: We propose to build an AI-powered platform that will analyze any public document in seconds, identify risks, explain complex terms in simple language, and empower users to make informed decisions.
 
-**Target Impact**: Democratize legal document understanding for 1.4 billion Indians across all socio-economic backgrounds.
+**Target Impact**: Our goal is to democratize legal document understanding for 1.4 billion Indians across all socio-economic backgrounds.
+
+**What We're Asking For**: Support and resources to develop this MVP and bring this vision to life.
 
 ---
 
@@ -176,33 +187,33 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 
 ---
 
-## 4. Functional Requirements
+## 4. Proposed Functional Requirements
 
-### 4.1 Document Upload & Processing
+### 4.1 Document Upload & Processing (Planned)
 
-**FR-1.1**: System shall accept multiple file formats
+**FR-1.1**: System will accept multiple file formats
 - PDF, DOC, DOCX, TXT, RTF
 - Images (JPG, PNG) with OCR capability
 - Direct text paste option
 - Maximum file size: 10MB
 
-**FR-1.2**: System shall support drag-and-drop upload
+**FR-1.2**: System will support drag-and-drop upload
 - Visual feedback during drag
 - File validation before processing
 - Error messages for invalid files
 
-**FR-1.3**: System shall extract text from documents
+**FR-1.3**: System will extract text from documents
 - PDF text extraction
 - OCR for scanned documents/images
 - Preserve document structure
 
-### 4.2 AI Analysis Engine
+### 4.2 AI Analysis Engine (Proposed)
 
-**FR-2.1**: System shall perform two-stage analysis
+**FR-2.1**: System will perform two-stage analysis
 - Stage 1: Rule-based keyword detection (instant)
 - Stage 2: AI semantic analysis (3-10 seconds)
 
-**FR-2.2**: System shall analyze for multiple risk factors
+**FR-2.2**: System will analyze for multiple risk factors
 - Unfair or one-sided terms
 - Hidden fees and charges
 - Liability limitations
@@ -212,30 +223,30 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 - Ambiguous language
 - Automatic renewal clauses
 
-**FR-2.3**: System shall generate risk score (0-100)
+**FR-2.3**: System will generate risk score (0-100)
 - Based on severity and frequency of issues
 - Weighted scoring algorithm
 - Color-coded risk categories
 
-**FR-2.4**: System shall identify minimum 5 red flags
+**FR-2.4**: System will identify minimum 5 red flags
 - Title and description for each
 - Severity rating
 - Recommendation for action
 
-**FR-2.5**: System shall identify minimum 4 fair clauses
+**FR-2.5**: System will identify minimum 4 fair clauses
 - Positive aspects of document
 - Balanced terms
 - Legal protections present
 
-**FR-2.6**: System shall provide 8+ recommendations
+**FR-2.6**: System will provide 8+ recommendations
 - Actionable advice
 - Negotiation strategies
 - Legal compliance checks
 - Next steps for user
 
-### 4.3 Results Display
+### 4.3 Results Display (Planned)
 
-**FR-3.1**: System shall display comprehensive analysis
+**FR-3.1**: System will display comprehensive analysis
 - Overall risk score with visual indicator
 - Summary in simple language (15-20 lines)
 - Detailed red flags list
@@ -243,69 +254,69 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 - Recommendations section
 - AI detailed analysis
 
-**FR-3.2**: System shall use color-coding
+**FR-3.2**: System will use color-coding
 - Red for high-risk items
 - Yellow for caution items
 - Green for positive items
 - Visual progress bars
 
-**FR-3.3**: System shall support result export (Future)
+**FR-3.3**: System will support result export (Future Phase)
 - PDF report generation
 - Email delivery
 - Shareable link
 
-### 4.4 User Authentication
+### 4.4 User Authentication (Planned)
 
-**FR-4.1**: System shall provide demo mode
+**FR-4.1**: System will provide demo mode
 - Instant access without registration
 - Full analysis capabilities
 - No data storage
 
-**FR-4.2**: System shall support user registration
+**FR-4.2**: System will support user registration
 - Email/password authentication
 - Firebase integration
 - Session management
 
-**FR-4.3**: System shall maintain analysis history (Future)
+**FR-4.3**: System will maintain analysis history (Future Phase)
 - Save previous analyses
 - Compare documents
 - Track changes over time
 
 ### 4.5 Multilingual Support (Future Phase)
 
-**FR-5.1**: System shall support Hindi
+**FR-5.1**: System will support Hindi
 - UI in Hindi
 - Document analysis in Hindi
 - Results in Hindi
 
-**FR-5.2**: System shall support regional languages
+**FR-5.2**: System will support regional languages
 - Tamil, Telugu, Bengali, Marathi, Gujarati
 - Phased rollout based on demand
 
 ---
 
-## 5. Non-Functional Requirements
+## 5. Proposed Non-Functional Requirements
 
-### 5.1 Performance
+### 5.1 Performance Goals
 
-**NFR-1.1**: Analysis completion time
-- Target: 3-5 seconds for 95% of documents
+**NFR-1.1**: Target analysis completion time
+- Goal: 3-5 seconds for 95% of documents
 - Maximum: 10 seconds
 - Timeout handling for large documents
 
-**NFR-1.2**: System availability
-- Target: 99% uptime
+**NFR-1.2**: Target system availability
+- Goal: 99% uptime
 - Graceful degradation during high load
 - Error recovery mechanisms
 
-**NFR-1.3**: Concurrent users
-- Support 100+ simultaneous analyses
+**NFR-1.3**: Concurrent user support
+- Target: 100+ simultaneous analyses
 - Queue system for peak loads
 - Scalable architecture
 
-### 5.2 Usability
+### 5.2 Usability Goals
 
-**NFR-2.1**: User interface
+**NFR-2.1**: User interface design
 - Intuitive, no training required
 - Mobile-responsive design
 - Accessible to users with disabilities
@@ -317,30 +328,30 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 - Use examples and analogies
 - Visual aids and icons
 
-### 5.3 Security & Privacy
+### 5.3 Security & Privacy Goals
 
-**NFR-3.1**: Data protection
+**NFR-3.1**: Data protection approach
 - Documents processed in memory
 - No permanent storage without consent
 - Encrypted transmission (HTTPS)
 - GDPR/Indian data protection compliance
 
-**NFR-3.2**: API security
+**NFR-3.2**: API security measures
 - Rate limiting to prevent abuse
 - API key authentication
 - Input validation and sanitization
 
-### 5.4 Scalability
+### 5.4 Scalability Goals
 
-**NFR-4.1**: Architecture
+**NFR-4.1**: Architecture approach
 - Cloud-native design
 - Horizontal scaling capability
 - Microservices architecture (future)
 - CDN for static assets
 
-### 5.5 Reliability
+### 5.5 Reliability Goals
 
-**NFR-5.1**: Error handling
+**NFR-5.1**: Error handling approach
 - Graceful fallback for AI failures
 - User-friendly error messages
 - Automatic retry mechanisms
@@ -348,33 +359,33 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 
 ---
 
-## 6. Technical Requirements
+## 6. Proposed Technical Requirements
 
-### 6.1 AI/ML Requirements
+### 6.1 AI/ML Requirements (Planned)
 
-**TR-1.1**: Use Google Gemini 2.5 Flash
+**TR-1.1**: Plan to use Google Gemini 2.5 Flash
 - Latest model for accuracy
 - JSON mode for structured output
 - Optimized prompts for Indian context
 
-**TR-1.2**: Implement rule-based pre-analysis
+**TR-1.2**: Will implement rule-based pre-analysis
 - Keyword dictionary for common risks
 - Fast preliminary scoring
 - Complement AI analysis
 
-**TR-1.3**: Context-aware analysis
+**TR-1.3**: Context-aware analysis approach
 - Detect document type automatically
 - Apply relevant legal frameworks
 - State-specific considerations
 
-### 6.2 Backend Requirements
+### 6.2 Backend Requirements (Planned)
 
-**TR-2.1**: RESTful API design
+**TR-2.1**: RESTful API design approach
 - `/api/analyze` endpoint for document analysis
 - `/api/health` endpoint for monitoring
 - JSON request/response format
 
-**TR-2.2**: File processing
+**TR-2.2**: File processing approach
 - Support multiple file formats
 - Text extraction libraries
 - OCR integration (Tesseract/Google Vision)
@@ -384,26 +395,26 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 - Configuration management
 - Deployment flexibility
 
-### 6.3 Frontend Requirements
+### 6.3 Frontend Requirements (Planned)
 
-**TR-3.1**: React-based SPA
+**TR-3.1**: React-based SPA approach
 - Component-based architecture
 - State management (React hooks)
 - Responsive design (mobile-first)
 
-**TR-3.2**: Progressive Web App
-- Offline capability (future)
+**TR-3.2**: Progressive Web App (Future)
+- Offline capability
 - Install on mobile devices
-- Push notifications (future)
+- Push notifications
 
-### 6.4 Deployment Requirements
+### 6.4 Deployment Requirements (Planned)
 
-**TR-4.1**: Cloud deployment
+**TR-4.1**: Cloud deployment approach
 - Platform: Vercel/Heroku/AWS
 - Auto-scaling configuration
 - CI/CD pipeline
 
-**TR-4.2**: Monitoring & logging
+**TR-4.2**: Monitoring & logging approach
 - Application performance monitoring
 - Error tracking
 - Usage analytics
@@ -549,13 +560,39 @@ Create an AI-powered platform that acts as a "Legal Guardian" for every Indian, 
 
 ---
 
-## 13. Conclusion
+## 13. Conclusion & Next Steps
 
-Lekha.ai addresses a critical gap in India's digital ecosystem by democratizing access to legal document understanding. With AI-powered analysis, simple language explanations, and a focus on social impact, we aim to empower every Indian to make informed decisions about the documents they sign.
+Lekha.ai is our **proposed solution** to address a critical gap in India's digital ecosystem. We believe that by democratizing access to legal document understanding through AI-powered analysis, simple language explanations, and a focus on social impact, we can empower every Indian to make informed decisions about the documents they sign.
 
 **Our Mission**: Make legal documents understandable for everyone, regardless of education, income, or language.
 
 **Our Vision**: A future where no Indian signs a document without understanding its implications.
+
+**Current Status**: **IDEA STAGE** - This is a concept proposal for the AI for Bharat Hackathon
+
+**What We Need**:
+- ✅ Hackathon approval and support
+- ✅ Resources to build MVP (2-3 months)
+- ✅ Mentorship from legal and AI experts
+- ✅ Beta testing opportunities
+- ✅ Partnerships with NGOs for social impact
+
+**If Approved, We Will**:
+1. Build MVP in 2-3 months
+2. Beta test with 100 users
+3. Iterate based on feedback
+4. Launch publicly
+5. Measure social impact
+6. Scale to millions of users
+
+**Why This Matters**:
+- 🇮🇳 Addresses real problem for millions of Indians
+- 🤖 Leverages latest AI technology (Gemini)
+- 💰 Affordable solution (free tier + low-cost premium)
+- 🌍 Scalable to serve entire nation
+- ❤️ Strong social impact mission
+
+We are excited about the potential of this idea and look forward to the opportunity to bring it to life!
 
 ---
 
@@ -565,8 +602,9 @@ Lekha.ai addresses a critical gap in India's digital ecosystem by democratizing 
 **Date**: February 11, 2026  
 **Team**: Lekha.ai  
 **Hackathon**: AI for Bharat  
-**Status**: Idea Proposal Stage  
+**Status**: **IDEA PROPOSAL STAGE** - Not Yet Implemented  
+**Contact**: [Your contact information]
 
 ---
 
-**Note**: This is a requirements document for hackathon idea submission. The project is in conceptual stage with MVP development planned. Some features described are proposed for future implementation.
+**DISCLAIMER**: This is a requirements document for hackathon idea submission. The project is in **CONCEPTUAL STAGE** with MVP development planned pending hackathon approval. Features described are **PROPOSED** for future implementation, not currently available.

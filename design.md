@@ -3,13 +3,27 @@
 
 ---
 
+> **📌 IMPORTANT NOTE**: This is a **CONCEPT DESIGN** for hackathon idea submission.  
+> The system described here is **NOT YET IMPLEMENTED**.  
+> This document presents our **PROPOSED ARCHITECTURE** and **PLANNED APPROACH** for building the platform.  
+> All technical specifications are subject to change during actual development.
+
+---
+
 ## 🎨 Executive Design Overview
 
 **Project**: Lekha.ai - AI for Bharat Public Document Analyzer  
-**Stage**: Hackathon Idea Submission  
-**Purpose**: Technical design and architecture proposal for MVP development
+**Stage**: **IDEA PROPOSAL** - Hackathon Submission  
+**Purpose**: Technical design and architecture proposal for future MVP development  
+**Status**: **CONCEPTUAL** - Not yet implemented
 
-This document outlines the proposed system architecture, technology choices, and implementation strategy for building an AI-powered platform that democratizes legal document understanding for all Indians.
+This document outlines our **proposed** system architecture, technology choices, and implementation strategy for building an AI-powered platform that will democratize legal document understanding for all Indians.
+
+**Key Points**:
+- ✨ This is a **design proposal**, not a completed system
+- 🎯 We are presenting our **vision and technical approach**
+- 🚀 Implementation will begin **after** hackathon approval
+- 📋 All specifications are **preliminary** and may evolve
 
 ---
 
@@ -918,9 +932,9 @@ Deploy to Production
 
 ---
 
-## 15. Conclusion
+## 15. Conclusion & Call to Action
 
-Lekha.ai is designed as a scalable, user-friendly, and impactful solution to democratize legal document understanding in India. The proposed architecture balances simplicity for MVP development with extensibility for future growth.
+Lekha.ai is our **proposed design** for a scalable, user-friendly, and impactful solution to democratize legal document understanding in India. The architecture presented here balances simplicity for MVP development with extensibility for future growth.
 
 **Key Design Principles**:
 1. **User-First**: Simple, accessible, no legal expertise required
@@ -929,12 +943,37 @@ Lekha.ai is designed as a scalable, user-friendly, and impactful solution to dem
 4. **Scalable**: Cloud-native, ready for millions of users
 5. **Impact-Focused**: Free tier, social mission, measurable outcomes
 
-**Next Steps**:
-1. Finalize technology choices
-2. Set up development environment
-3. Build MVP (2 months)
-4. Beta testing with 100 users
-5. Public launch and iteration
+**Current Status**: **CONCEPT DESIGN** - Not Yet Implemented
+
+**What We're Proposing**:
+- ✨ A technically feasible solution using proven technologies
+- 🎯 A clear implementation roadmap
+- 📊 Measurable success criteria
+- 💰 Cost-effective development approach
+- 🚀 Scalable architecture for growth
+
+**Next Steps (If Approved)**:
+1. **Month 1**: Finalize technology choices and set up development environment
+2. **Months 2-3**: Build MVP with core features
+3. **Month 4**: Beta testing with 100 users
+4. **Month 5**: Iterate based on feedback
+5. **Month 6**: Public launch and marketing
+6. **Months 7-12**: Scale and add features
+
+**Why This Design Works**:
+- ✅ Uses proven, reliable technologies
+- ✅ Minimizes development complexity
+- ✅ Keeps costs low initially
+- ✅ Allows rapid iteration
+- ✅ Scales as user base grows
+
+**Resource Requirements**:
+- Development team: 2-3 developers
+- Timeline: 2-3 months for MVP
+- Budget: ~₹2-3 lakhs for MVP (hosting, API costs)
+- Mentorship: Legal experts, AI specialists
+
+We believe this design provides a solid foundation for building a platform that can truly make a difference in the lives of millions of Indians. We're excited about the opportunity to turn this vision into reality!
 
 ---
 
@@ -944,8 +983,9 @@ Lekha.ai is designed as a scalable, user-friendly, and impactful solution to dem
 **Date**: February 11, 2026  
 **Team**: Lekha.ai  
 **Hackathon**: AI for Bharat  
-**Status**: Design Proposal Stage  
+**Status**: **DESIGN PROPOSAL STAGE** - Not Yet Implemented  
+**Contact**: [Your contact information]
 
 ---
 
-**Note**: This is a design document for hackathon idea submission. The project is in conceptual stage. Technical specifications are proposed based on best practices and may be refined during implementation.
+**DISCLAIMER**: This is a design document for hackathon idea submission. The project is in **CONCEPTUAL STAGE**. Technical specifications are **PROPOSED** based on best practices and may be refined during actual implementation. **NO CODE HAS BEEN WRITTEN YET** - this is purely a design proposal.
