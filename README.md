@@ -1,13 +1,14 @@
 # Lekha.ai - AI-Powered Term And Public Document Analyzer
 
-🏠 **Smart Lease Analysis for Tenants** - Protect yourself from unfair rental agreements with AI-powered legal analysis.
+📄 **Smart Analysis for All Public Documents** - Protect yourself from unfair terms, hidden clauses, and legal risks in any public document with AI-powered analysis.
 
 ## 🌟 Features
 
-- **AI-Powered Analysis**: Uses Google Gemini 2.5 Flash for comprehensive lease document analysis
+- **AI-Powered Analysis**: Uses Google Gemini 2.5 Flash for comprehensive document analysis
+- **Universal Document Support**: Analyze lease agreements, terms & conditions, service agreements, employment contracts, NDAs, privacy policies, and more
 - **Risk Assessment**: 20-point risk scoring system (0-100 scale)
-- **Red Flag Detection**: Identifies potentially unfair or illegal clauses
-- **Legal Compliance**: Checks against local tenant protection laws
+- **Red Flag Detection**: Identifies potentially unfair, illegal, or hidden clauses
+- **Legal Compliance**: Checks against applicable laws and regulations
 - **Multi-Format Support**: PDF, DOC, DOCX, TXT, RTF, JPG, PNG files
 - **State-Specific Analysis**: Tailored analysis for different Indian states
 - **Demo Mode**: Try the system without registration
@@ -90,13 +91,13 @@ Or click "Try Demo Mode" for instant access.
 - **86-100**: 🟢 STABLE - Fair agreement
 
 ### What We Analyze
-- Security deposit terms
-- Rent increase clauses
-- Termination procedures
-- Maintenance responsibilities
-- Privacy rights
-- Legal compliance
-- Missing tenant protections
+- **Lease Agreements**: Security deposits, rent terms, termination clauses, maintenance responsibilities
+- **Terms & Conditions**: Hidden fees, data usage, liability limitations, cancellation policies
+- **Service Agreements**: Payment terms, service scope, warranties, dispute resolution
+- **Employment Contracts**: Compensation, benefits, non-compete clauses, termination conditions
+- **Privacy Policies**: Data collection, sharing practices, user rights, retention policies
+- **NDAs**: Confidentiality scope, duration, exceptions, penalties
+- **General Contracts**: Rights and obligations, legal compliance, missing protections, unfair clauses
 
 ## 🛠️ Technology Stack
 
@@ -220,10 +221,18 @@ If you encounter issues:
 3. Ensure all dependencies are installed
 4. Check the GitHub issues page
 
+## � Use Cases
+
+- **Individuals**: Analyze lease agreements, employment contracts, service terms before signing
+- **Consumers**: Review terms & conditions of online services, subscriptions, purchases
+- **Small Businesses**: Evaluate vendor agreements, client contracts, partnership terms
+- **Students**: Understand university agreements, housing contracts, internship terms
+- **Freelancers**: Review client contracts, platform terms, payment agreements
+
 ## 🏆 Hackathon Project
 
-This project was developed for the Build & Grow Hackathon, focusing on AI-powered legal document analysis to help tenants make informed decisions about rental agreements.
+This project was developed for the Build & Grow Hackathon, focusing on AI-powered legal document analysis to help everyone make informed decisions about any public document or agreement they encounter.
 
 ---
 
-**Made with ❤️ for safer renting experiences**
+**Made with ❤️ for safer, more transparent agreements for all**

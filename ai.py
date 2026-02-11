@@ -7,25 +7,44 @@ from dotenv import load_dotenv
 # --- Part 1: Rule-Based Pre-analysis ---
 
 DANGER_KEYWORDS = {
-    # High-Risk Phrases (potentially illegal or highly unfair)
+    # High-Risk Phrases (potentially illegal or highly unfair) - Universal
     "waive your rights": 95,
-    "landlord is not responsible for any injury": 90,
-    "access the property without notice": 85,
-    "tenant is responsible for all repairs": 80,
+    "not responsible for any injury": 90,
+    "access without notice": 85,
+    "responsible for all repairs": 80,
     "confess judgment": 98,
-    "security deposit is non-refundable": 88,
+    "non-refundable": 88,
+    "no refund": 88,
+    "cannot be cancelled": 92,
+    "irrevocable": 90,
+    "unlimited liability": 95,
+    "waive all claims": 93,
+    "sell your data": 94,
+    "share your information with third parties": 75,
+    "no warranty": 70,
+    "as-is": 55,
+    "at our sole discretion": 60,
+    "without notice": 80,
+    "binding arbitration": 65,
+    "class action waiver": 70,
+    "indemnify and hold harmless": 68,
 
-    # Medium-Risk Phrases (warrants caution and clarification)
+    # Medium-Risk Phrases (warrants caution and clarification) - Universal
     "automatic renewal": 70,
-    "rent increases may occur": 65,
-    "at the landlord's sole discretion": 60,
-    "as-is condition": 55,
-    "late fees of more than 5%": 68,
+    "may increase": 65,
+    "at our discretion": 60,
+    "late fees": 68,
+    "termination without cause": 72,
+    "modify terms at any time": 75,
+    "collect personal information": 50,
+    "cookies and tracking": 45,
+    "third-party services": 40,
 
-    # Low-Risk Phrases (common but good to be aware of)
+    # Low-Risk Phrases (common but good to be aware of) - Universal
     "no pets": 20,
-    "no alterations or improvements": 25,
-    "subletting requires prior consent": 15,
+    "no alterations": 25,
+    "prior consent required": 15,
+    "age restriction": 20,
 }
 
 def analyze_text_with_rules(text):
@@ -225,58 +244,58 @@ def create_detailed_fallback_response(original_text):
         "ratingScore": risk_score,
         "colorLabel": color_label,
         "ratingText": rating_text,
-        "summary": f"This lease agreement has been analyzed and shows a {rating_text.lower()} risk level with a score of {risk_score}/100. The document contains several clauses that require careful review and consideration. Key areas of concern include tenant rights, landlord obligations, termination procedures, and financial responsibilities. The analysis identifies multiple red flags that could potentially disadvantage the tenant, as well as some fair clauses that provide reasonable protections. Overall assessment suggests this agreement needs thorough review and potentially some negotiation to ensure fair terms for both parties. Specific attention should be paid to security deposit terms, maintenance responsibilities, privacy rights, and termination procedures.",
-        "shortSummary": f"Lease agreement analyzed with {rating_text.lower()} risk level ({risk_score}/100) - requires careful review and potential negotiation.",
-        "aiSummary": f"Comprehensive analysis of this lease agreement reveals a {rating_text.lower()} risk profile with an overall score of {risk_score}/100. The document has been thoroughly examined for tenant protections, landlord obligations, financial terms, and legal compliance. Several concerning clauses have been identified that could potentially disadvantage the tenant, including issues with security deposits, maintenance responsibilities, privacy rights, and termination procedures. However, the agreement also contains some fair and reasonable terms that provide adequate protections. The analysis suggests this lease requires careful review and potentially some negotiation to ensure balanced terms. Key recommendations include clarifying ambiguous clauses, ensuring compliance with local tenant laws, and negotiating more favorable terms where possible. Tenants should pay particular attention to their rights and obligations under this agreement before signing.",
+        "summary": f"This document has been analyzed and shows a {rating_text.lower()} risk level with a score of {risk_score}/100. The document contains several clauses that require careful review and consideration. Key areas of concern include rights and obligations, termination procedures, financial responsibilities, liability limitations, and data privacy (if applicable). The analysis identifies multiple red flags that could potentially disadvantage one party, as well as some fair clauses that provide reasonable protections. Overall assessment suggests this document needs thorough review and potentially some negotiation to ensure fair terms for all parties. Specific attention should be paid to payment terms, cancellation procedures, liability clauses, and any automatic renewal provisions.",
+        "shortSummary": f"Document analyzed with {rating_text.lower()} risk level ({risk_score}/100) - requires careful review and potential negotiation.",
+        "aiSummary": f"Comprehensive analysis of this document reveals a {rating_text.lower()} risk profile with an overall score of {risk_score}/100. The document has been thoroughly examined for fairness, obligations, financial terms, and legal compliance. Several concerning clauses have been identified that could potentially disadvantage one party, including issues with termination terms, liability limitations, hidden fees, and missing protections. However, the document also contains some fair and reasonable terms that provide adequate protections. The analysis suggests this document requires careful review and potentially some negotiation to ensure balanced terms. Key recommendations include clarifying ambiguous clauses, ensuring compliance with applicable laws, and negotiating more favorable terms where possible. All parties should pay particular attention to their rights and obligations under this agreement before signing.",
         "redFlags": [
             {
-                "title": "Unclear Lease Terms",
-                "issue": "Some clauses in the agreement lack clarity and could be interpreted unfavorably to the tenant"
+                "title": "Unclear Terms",
+                "issue": "Some clauses in the document lack clarity and could be interpreted unfavorably"
             },
             {
-                "title": "Potential Tenant Disadvantage",
-                "issue": "Several terms appear to favor the landlord over the tenant's interests"
+                "title": "Potential Disadvantage",
+                "issue": "Several terms appear to favor one party over the other's interests"
             },
             {
                 "title": "Missing Protections",
-                "issue": "The agreement may lack certain standard tenant protections and rights"
+                "issue": "The document may lack certain standard protections and rights"
             },
             {
                 "title": "Ambiguous Responsibilities",
-                "issue": "Maintenance and repair responsibilities are not clearly defined between parties"
+                "issue": "Obligations and responsibilities are not clearly defined between parties"
             },
             {
                 "title": "Termination Concerns",
-                "issue": "Lease termination procedures may not provide adequate notice or protection for tenants"
+                "issue": "Termination procedures may not provide adequate notice or protection"
             }
         ],
         "fairClauses": [
             {
-                "title": "Standard Lease Structure",
-                "recommendation": "The agreement follows a generally standard lease format with basic terms defined"
+                "title": "Standard Structure",
+                "recommendation": "The document follows a generally standard format with basic terms defined"
             },
             {
-                "title": "Clear Rental Amount",
-                "recommendation": "Monthly rent amount and payment terms are clearly specified"
+                "title": "Clear Payment Terms",
+                "recommendation": "Payment amount and terms are clearly specified"
             },
             {
-                "title": "Defined Lease Period",
-                "recommendation": "The lease duration and dates are clearly established"
+                "title": "Defined Period",
+                "recommendation": "The duration and dates are clearly established"
             },
             {
                 "title": "Basic Legal Framework",
-                "recommendation": "The agreement includes fundamental legal elements required for a valid lease"
+                "recommendation": "The document includes fundamental legal elements required for validity"
             }
         ],
         "recommendations": [
-            "Carefully review all clauses and terms before signing the agreement",
-            "Negotiate any unfavorable terms that could disadvantage your position as a tenant",
-            "Ensure all verbal agreements are documented in writing within the lease",
-            "Verify that the lease complies with local and state tenant protection laws",
+            "Carefully review all clauses and terms before signing the document",
+            "Negotiate any unfavorable terms that could disadvantage your position",
+            "Ensure all verbal agreements are documented in writing",
+            "Verify that the document complies with applicable laws and regulations",
             "Clarify any ambiguous language or terms that could be misinterpreted",
-            "Consider having a legal professional review the agreement if concerns arise",
-            "Document the property condition before move-in to protect your security deposit",
-            "Understand your rights and responsibilities as outlined in the lease agreement"
+            "Consider having a legal professional review the document if concerns arise",
+            "Document all communications and keep copies of all versions",
+            "Understand your rights and obligations as outlined in the document"
         ],
         "redFlagsCount": 5,
         "fairClausesCount": 4
@@ -321,14 +340,26 @@ def analyze_with_gemini(text, preliminary_findings, state=""):
 
         location_context = f"Location: {state}, India." if state else "Location: General."
 
-        system_prompt = f"""You are Kiro, a Legal Risk Auditor. Analyze this lease agreement thoroughly.
+        system_prompt = f"""You are Kiro, a Legal Document Auditor and Risk Analyst. Analyze this document thoroughly.
+
+This could be any type of public document: lease agreement, terms & conditions, service agreement, employment contract, privacy policy, NDA, or general contract.
 
 RATING: 0-20=CRITICAL, 21-45=DANGEROUS, 46-70=RISKY, 71-85=CAUTION, 86-100=STABLE
 
 {location_context}
 
+Analyze for:
+- Unfair or one-sided terms
+- Hidden fees or charges
+- Liability limitations
+- Data privacy concerns
+- Cancellation/termination terms
+- Missing protections
+- Legal compliance issues
+- Ambiguous language
+
 Return ONLY this JSON format (no markdown):
-{{"overallScore":75,"ratingScore":75,"colorLabel":"YELLOW","ratingText":"CAUTION","summary":"Comprehensive 15-20 line summary covering all key aspects of the lease including rent terms, security deposits, maintenance responsibilities, termination clauses, tenant rights, landlord obligations, and overall fairness assessment with specific concerns and positive aspects identified","shortSummary":"Brief one-sentence summary","aiSummary":"Detailed 15-20 line analysis explaining key findings, risk factors, legal compliance issues, missing protections, unfair clauses, balanced terms, and overall assessment with specific recommendations for negotiation or acceptance","redFlags":[{{"title":"Unfair Termination Clause","issue":"Landlord can terminate lease with only 7 days notice which is below legal minimum"}},{{"title":"Excessive Security Deposit","issue":"Security deposit of 3 months rent exceeds legal limit of 2 months"}},{{"title":"Maintenance Responsibility","issue":"Tenant responsible for all repairs including structural issues"}},{{"title":"No Privacy Protection","issue":"Landlord can enter property without notice or consent"}},{{"title":"Rent Increase Clause","issue":"Allows unlimited rent increases with minimal notice"}}],"fairClauses":[{{"title":"Refundable Security Deposit","recommendation":"Security deposit is clearly stated as refundable"}},{{"title":"Clear Rent Terms","recommendation":"Monthly rent amount and due date are clearly specified"}},{{"title":"Defined Lease Period","recommendation":"Lease duration is clearly stated with start and end dates"}},{{"title":"Utility Responsibilities","recommendation":"Utility payment responsibilities are clearly defined"}}],"recommendations":["Negotiate termination notice period to minimum 30 days","Request reduction of security deposit to legal maximum","Clarify maintenance responsibilities and exclude structural repairs","Add privacy clause requiring 24-48 hour notice for entry","Negotiate rent increase limitations and notice periods","Add tenant protection clauses for habitability","Include dispute resolution mechanisms","Verify compliance with local tenant protection laws"],"redFlagsCount":5,"fairClausesCount":4}}
+{{"overallScore":75,"ratingScore":75,"colorLabel":"YELLOW","ratingText":"CAUTION","summary":"Comprehensive 15-20 line summary covering all key aspects including main terms, obligations, rights, fees, termination, liability, data usage (if applicable), and overall fairness assessment with specific concerns and positive aspects identified","shortSummary":"Brief one-sentence summary","aiSummary":"Detailed 15-20 line analysis explaining key findings, risk factors, legal compliance issues, missing protections, unfair clauses, balanced terms, and overall assessment with specific recommendations","redFlags":[{{"title":"Unfair Termination Clause","issue":"Can terminate with only 7 days notice which may be below legal minimum"}},{{"title":"Excessive Fees","issue":"Hidden fees not clearly disclosed upfront"}},{{"title":"Liability Limitation","issue":"Company not responsible for any damages or losses"}},{{"title":"No Privacy Protection","issue":"Can share personal data with third parties without consent"}},{{"title":"Automatic Renewal","issue":"Auto-renews without clear notification or easy cancellation"}}],"fairClauses":[{{"title":"Clear Payment Terms","recommendation":"Payment amount and schedule are clearly specified"}},{{"title":"Defined Service Period","recommendation":"Service duration is clearly stated with start and end dates"}},{{"title":"Refund Policy","recommendation":"Refund terms are clearly outlined"}},{{"title":"Contact Information","recommendation":"Support and contact details are provided"}}],"recommendations":["Review all terms carefully before accepting","Negotiate unfavorable terms if possible","Clarify any ambiguous language","Verify compliance with applicable laws","Document all communications","Consider legal review for high-value agreements","Understand your rights and obligations","Keep copies of all documents"],"redFlagsCount":5,"fairClausesCount":4}}
 
 Document: {text}"""
 

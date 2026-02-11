@@ -9,7 +9,7 @@
 │                        User Browser                          │
 │  ┌────────────────────────────────────────────────────┐     │
 │  │           React Frontend Application                │     │
-│  │  - Document Upload UI                               │     │
+│  │  - Document Upload UI (All Document Types)         │     │
 │  │  - Analysis Progress Display                        │     │
 │  │  - Results Visualization                            │     │
 │  │  - Firebase Authentication                          │     │
@@ -22,16 +22,17 @@
 │                    Flask Backend Server                      │
 │  ┌────────────────────────────────────────────────────┐     │
 │  │              API Layer (app.py)                     │     │
-│  │  - /api/analyze endpoint                            │     │
+│  │  - /api/analyze endpoint (Universal)                │     │
 │  │  - /api/health endpoint                             │     │
-│  │  - File upload handling                             │     │
+│  │  - File upload handling (All formats)              │     │
 │  │  - CORS configuration                               │     │
 │  └────────────────────────────────────────────────────┘     │
 │                            │                                 │
 │  ┌────────────────────────────────────────────────────┐     │
 │  │         Analysis Engine (ai.py)                     │     │
-│  │  - Rule-based pre-analysis                          │     │
+│  │  - Rule-based pre-analysis (Universal)             │     │
 │  │  - Gemini AI integration                            │     │
+│  │  - Document type detection                          │     │
 │  │  - JSON parsing & validation                        │     │
 │  │  - Fallback response generation                     │     │
 │  └────────────────────────────────────────────────────┘     │
@@ -42,8 +43,8 @@
 ┌─────────────────────────────────────────────────────────────┐
 │              Google Gemini 2.5 Flash API                     │
 │  - Natural language processing                               │
-│  - Legal document analysis                                   │
-│  - Risk assessment                                           │
+│  - Universal document analysis                               │
+│  - Risk assessment for any document type                     │
 │  - Structured JSON response                                  │
 └─────────────────────────────────────────────────────────────┘
                             │
@@ -51,7 +52,7 @@
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    MySQL Database                            │
-│  - User analysis history                                     │
+│  - User analysis history (all document types)                │
 │  - Document metadata                                         │
 │  - Usage statistics                                          │
 └─────────────────────────────────────────────────────────────┘

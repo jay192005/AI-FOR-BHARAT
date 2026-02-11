@@ -2,15 +2,19 @@
 
 ## 1. Project Overview
 
-**Project Name**: Lekha.ai - AI-Powered Lease Agreement Analyzer
+**Project Name**: Lekha.ai - AI-Powered Public Document & Terms Analyzer
 
-**Purpose**: To provide tenants with an intelligent, automated system for analyzing rental lease agreements, identifying potential risks, unfair clauses, and legal compliance issues using AI technology.
+**Purpose**: To provide individuals and organizations with an intelligent, automated system for analyzing any public document, terms & conditions, service agreements, contracts, and legal documents, identifying potential risks, unfair clauses, hidden terms, and legal compliance issues using AI technology.
 
 **Target Users**: 
-- Residential tenants in India
-- Property renters seeking legal protection
-- Individuals without legal expertise
-- First-time renters
+- General public reviewing any legal document or agreement
+- Consumers analyzing terms & conditions of online services
+- Employees reviewing employment contracts
+- Tenants analyzing lease agreements
+- Freelancers evaluating client contracts
+- Small business owners reviewing vendor agreements
+- Students understanding university or housing contracts
+- Anyone signing any public document or agreement
 
 ---
 
@@ -74,11 +78,16 @@
 
 **FR-2.4.3**: The system shall analyze documents for:
 - Risk assessment (0-100 score)
-- Red flags (unfair clauses)
-- Fair clauses (positive terms)
+- Red flags (unfair clauses, hidden terms, liability limitations)
+- Fair clauses (positive terms, protections)
 - Legal compliance issues
-- Missing tenant protections
-- Recommendations for negotiation
+- Missing protections or rights
+- Hidden fees or charges
+- Data privacy concerns
+- Cancellation and termination terms
+- Liability and indemnification clauses
+- Dispute resolution mechanisms
+- Recommendations for negotiation or action
 
 **FR-2.4.4**: The system shall complete analysis within 3-10 seconds.
 
@@ -395,13 +404,19 @@
 
 ### 7.1 Legal Compliance
 
-**CR-7.1.1**: System shall analyze against Indian tenant protection laws.
+**CR-7.1.1**: System shall analyze against applicable Indian laws and regulations.
 
-**CR-7.1.2**: System shall identify state-specific legal requirements.
+**CR-7.1.2**: System shall identify state-specific legal requirements when applicable.
 
-**CR-7.1.3**: System shall flag potentially illegal clauses.
+**CR-7.1.3**: System shall flag potentially illegal or unenforceable clauses.
 
-**CR-7.1.4**: System shall provide legal disclaimers.
+**CR-7.1.4**: System shall provide legal disclaimers that analysis is for informational purposes only.
+
+**CR-7.1.5**: System shall analyze consumer protection laws compliance.
+
+**CR-7.1.6**: System shall check data privacy and protection regulations (if applicable).
+
+**CR-7.1.7**: System shall identify employment law compliance issues (for employment contracts).
 
 ### 7.2 Data Privacy
 
